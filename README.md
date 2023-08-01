@@ -64,3 +64,9 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Helm Chart Packaging
+
+We also provide chart deployment for this code, you can check in directory `./helm`\
+1. file `values.yaml` : define variable non-secret configuration will override the default value in the Helm chart
+2. file `secrets.yaml` : define variable secret/sensitive configuration, must be not checked into version control.
