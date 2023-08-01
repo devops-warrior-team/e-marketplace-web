@@ -4,7 +4,7 @@ services:
     image: feriva22/e-marketplace:latest
     restart: always
     ports:
-      - 8000:80
+      - 8080:80
     environment:
       - APP_KEY="base64:VqUWxR69QzhZVrW0DnMYMcoX86CPWYezHCN80ixHAS0="
       - APP_ENV=local
