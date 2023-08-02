@@ -72,8 +72,17 @@ jobs:
           run : |
             docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} docker.io
         
+        - name: Set up Docker Buildx
+          id: buildx
+          uses: docker/setup-buildx-action@v1
+
+        - name: Cache Docker layers
+          run: |
+            docker buildx create --use
+            docker buildx inspect --bootstrap
+
         - name: Build Docker Image
-          run: docker build -t docker.io/feriva22/e-marketplace:latest .
+          run: docker buildx build -t docker.io/feriva22/e-marketplace:latest .
 
         - name: Push Docker Image
           run: docker push docker.io/feriva22/e-marketplace:latest
