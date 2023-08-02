@@ -1,7 +1,7 @@
-name: "Deploy to Argo CD"
+name: "CD"
 on:
   workflow_run:
-    workflows: ["CI Testing"]
+    workflows: ["CI"]
     branches: [main]
     types: 
       - completed
