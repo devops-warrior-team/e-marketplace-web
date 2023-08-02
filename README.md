@@ -72,3 +72,13 @@ We assume has install sealed secret controller in namespace `kube-system`
 ```
 kubeseal --controller-namespace kube-system --format yaml -f deployment/e-marketplace-secret.yaml > deployment/e-marketplace-sealedsecret.yaml
 ```
+
+If you facing error like this : \
+```
+Failed to unseal: no key could decrypt secret
+```\
+Its mean have problem with decrypting from controller to namespaced sealed secret\
+For temporary solution, we can use scope cluster-wide first
+```
+kubeseal --scope cluster-wide --controller-namespace kube-system --format yaml -f deployment/e-marketplace-secret.yaml > deployment/e-marketplace-sealedsecret.yaml
+```
