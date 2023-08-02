@@ -1,4 +1,4 @@
-name: "CI Testing"
+name: "CI"
 on: [push]
 jobs:
   
@@ -61,3 +61,19 @@ jobs:
         with:
           name: console
           path: tests/Browser/console
+  build-and-push:
+      needs: [unit-feature-testing, browser-testing ]
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Login to Container Registry
+          run : |
+            docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} docker.io
+        
+        - name: Build Docker Image
+          run: docker build -t docker.io/feriva22/e-marketplace:latest .
+
+        - name: Push Docker Image
+          run: docker push docker.io/feriva22/e-marketplace:latest
