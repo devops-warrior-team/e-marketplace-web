@@ -23,4 +23,4 @@ spec:
         - configMapRef:
             name: e-marketplace-configmap
         - secretRef:
-            name: e-marketplace-secret
+            name: e-marketplace-secret-new
