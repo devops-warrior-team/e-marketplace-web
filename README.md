@@ -65,8 +65,10 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-## Helm Chart Packaging
-
-We also provide chart deployment for this code, you can check in directory `./helm`\
-1. file `values.yaml` : define variable non-secret configuration will override the default value in the Helm chart
-2. file `secrets.yaml` : define variable secret/sensitive configuration, must be not checked into version control.
+## Sealed Secret 
+We need make sure security for saving secret in repository, so then we use `SealedSecret` with `kubeseal` command utility to encrypt `Secret`.\
+This is how to implement it, make sure you have installed sealed secret in your kubernetes cluster.\
+We assume has install sealed secret controller in namespace `kube-system`
+```
+kubeseal --controller-namespace kube-system --format yaml -f deployment/e-marketplace-secret.yaml > deployment/e-marketplace-sealedsecret.yaml
+```
