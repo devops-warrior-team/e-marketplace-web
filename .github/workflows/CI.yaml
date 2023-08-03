@@ -1,5 +1,9 @@
 name: "CI"
 on: [push]
+env:
+  IMAGE_NAME: docker.io/feriva22/e-marketplace
+  INFRA_REPO: devops-warrior-team/e-marketplace-infra-repo
+  KUBERNETES_MANIFEST_LOCATION: e-marketplace-web/kubernetes-manifest/e-marketplace-deployment.yaml
 jobs:
   
   unit-feature-testing:
@@ -83,4 +87,15 @@ jobs:
 
         - name: Build and Push Docker Image
           run: |
-            docker buildx build --push -t docker.io/feriva22/e-marketplace:latest .
+            docker buildx build --push -t ${{ env.IMAGE_NAME }}:${{ github.run_number }} .
+  dispatch-event-update-image:
+      needs: [build-and-push]
+      runs-on: ubuntu-latest
+      steps:
+        - name: Repository Dispatch
+          uses: peter-evans/repository-dispatch@v1
+          with:
+            token: ${{ secrets.PAT }}
+            repository: ${{ env.INFRA_REPO }}
+            event-type: new-image
+            client-payload: '{"image": "${{ env.IMAGE_NAME }}:${{ github.run_number }}", "deployment_manifest_location":"${{ env.KUBERNETES_MANIFEST_LOCATION }}"}'
