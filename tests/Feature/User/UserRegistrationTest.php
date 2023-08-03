@@ -3,7 +3,6 @@
 namespace Tests\Feature\User;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UserRegistrationTest extends TestCase
@@ -29,7 +28,7 @@ class UserRegistrationTest extends TestCase
 
         // Simulate a POST request to the user registration endpoint
         $response = $this->post('/user/register', $data);
-        
+
         // Assert that the user was successfully created in the database
         $this->assertDatabaseHas('users', ['email' => 'john@example.com']);
 

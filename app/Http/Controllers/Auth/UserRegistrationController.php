@@ -3,32 +3,29 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserRegistrationController extends Controller
 {
-
     /**
      * Handle an incoming registration request.
      *
-     * @param  \Illuminate\Http\Request  $request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\View\View
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         return view('auth.register');
     }
-    
+
     /**
      * Handle an incoming registration request.
      *
-     * @param  \Illuminate\Http\Request  $request
      *
      * @return \Illuminate\Http\RedirectResponse
      *
@@ -37,16 +34,16 @@ class UserRegistrationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'                  => 'required|string|max:255|unique:users',
-            'email'                 => 'required|email|unique:users',
-            'password'              => 'required|string',
+            'name' => 'required|string|max:255|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string',
             //'password_confirmation' => 'required|same:password',
         ]);
 
         $user = User::create([
             'name' => $request->name,
-            'email'  => $request->email,
-            'password'  => Hash::make($request->password),
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
 
         //event(new Registered($user));
@@ -55,5 +52,4 @@ class UserRegistrationController extends Controller
 
         return redirect('/home');
     }
-
 }
