@@ -4,6 +4,8 @@ on:
     branches:
       - main
   pull_request:
+    types:
+      - "closed"
     branches:
       - main
 
@@ -58,6 +60,8 @@ jobs:
         run: php artisan test
 
   browser-testing:
+    # this job will only run if the PR has been merged or Push
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
     needs: [code-style-linter, static-analysis-code ]
     runs-on: ubuntu-latest
     env:
@@ -99,6 +103,8 @@ jobs:
           path: tests/Browser/console
 
   build-and-push:
+      # this job will only run if the PR has been merged or Push
+      if: github.event.pull_request.merged == true || github.event_name == 'push'
       needs: [unit-feature-testing, browser-testing ]
       runs-on: ubuntu-latest
       steps:
@@ -123,6 +129,8 @@ jobs:
             docker buildx build --push -t ${{ env.IMAGE_NAME }}:${{ github.run_number }} .
 
   dispatch-event-update-image:
+      # this job will only run if the PR has been merged or Push
+      if: github.event.pull_request.merged== true || github.event_name == 'push'
       needs: [build-and-push]
       runs-on: ubuntu-latest
       steps:
