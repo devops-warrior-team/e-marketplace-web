@@ -28,7 +28,7 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 RUN rm -rf /var/cache/apk/*
 
 # Expose the PHP-FPM port
-EXPOSE 80
+EXPOSE 9000
 
 # Start PHP-FPM
 CMD ["php-fpm"]
