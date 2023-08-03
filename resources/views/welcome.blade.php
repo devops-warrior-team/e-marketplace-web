@@ -80,9 +80,10 @@
                                     </svg>
                                 </div>
 
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Laracasts</h2>
+                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Dataku</h2>
 
                                 <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                     my data
                                     Laracasts is another documentation for laravel
                                 </p>
                             </div>
