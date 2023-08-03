@@ -36,7 +36,7 @@ jobs:
         run: ./vendor/bin/phpstan analyse
 
   unit-feature-testing:
-    needs: [code-style-lint, static-analyst-code ]
+    needs: [code-style-linter, static-analysis-code ]
     runs-on: ubuntu-latest
     env:
       DB_USERNAME: root
@@ -58,7 +58,7 @@ jobs:
         run: php artisan test
 
   browser-testing:
-    needs: [code-style-lint, static-analyst-code ]
+    needs: [code-style-linter, static-analysis-code ]
     runs-on: ubuntu-latest
     env:
       APP_URL: "http://127.0.0.1:8000"
