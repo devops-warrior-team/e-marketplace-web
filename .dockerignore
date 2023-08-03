@@ -10,8 +10,8 @@ vendor
 .gitignore
 
 # Ignore composer files not needed for runtime
-composer.json
-composer.lock
+#composer.json
+#composer.lock
 
 # Ignore NPM related files not needed for runtime
 package.json
