@@ -1,2 +1,28 @@
-.env
-/vendor
+# Ignore development-related files and directories
+node_modules
+vendor
+*.env
+#.env.*
+*.log
+
+# Ignore version control files
+.git
+.gitignore
+
+# Ignore composer files not needed for runtime
+#composer.json
+#composer.lock
+
+# Ignore NPM related files not needed for runtime
+package.json
+package-lock.json
+yarn.lock
+
+# Ignore PHPUnit configuration and cache files
+phpunit.xml
+/tests/*
+/.phpunit.result.cache
+
+# Ignore IDE-specific files and directories
+.idea
+.vscode

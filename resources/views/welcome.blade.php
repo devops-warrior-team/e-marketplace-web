@@ -84,6 +84,7 @@
 
                                 <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
                                      my data
+                                    Laracasts is another documentation for laravel
                                 </p>
                             </div>
 
@@ -143,7 +144,7 @@
                     </div>
 
                     <div class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                        Running with (PHP v{{ PHP_VERSION }})
                     </div>
                 </div>
             </div>

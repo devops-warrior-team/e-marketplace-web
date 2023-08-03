@@ -1,8 +1,39 @@
 name: "CI"
-on: [push]
+on: 
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE_NAME: docker.io/feriva22/e-marketplace
+  INFRA_REPO: devops-warrior-team/e-marketplace-infra-repo
+  KUBERNETES_MANIFEST_LOCATION: e-marketplace-web/kubernetes-manifest/e-marketplace-deployment.yaml
 jobs:
-  
+
+  code-style-linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install Composer Dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Code Style Check
+        run: ./vendor/bin/pint
+
+  static-analysis-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install Composer Dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Static Analyst Code
+        run: ./vendor/bin/phpstan analyse
+
   unit-feature-testing:
+    needs: [code-style-linter, static-analysis-code ]
     runs-on: ubuntu-latest
     env:
       DB_USERNAME: root
@@ -22,7 +53,9 @@ jobs:
         run: php artisan key:generate
       - name: Run Unit & Feature Tests
         run: php artisan test
+
   browser-testing:
+    needs: [code-style-linter, static-analysis-code ]
     runs-on: ubuntu-latest
     env:
       APP_URL: "http://127.0.0.1:8000"
@@ -61,6 +94,7 @@ jobs:
         with:
           name: console
           path: tests/Browser/console
+
   build-and-push:
       needs: [unit-feature-testing, browser-testing ]
       runs-on: ubuntu-latest
@@ -81,8 +115,18 @@ jobs:
             docker buildx create --use
             docker buildx inspect --bootstrap
 
-        - name: Build Docker Image
-          run: docker buildx build -t docker.io/feriva22/e-marketplace:latest .
+        - name: Build and Push Docker Image
+          run: |
+            docker buildx build --push -t ${{ env.IMAGE_NAME }}:${{ github.run_number }} .
 
-        - name: Push Docker Image
-          run: docker push docker.io/feriva22/e-marketplace:latest
+  dispatch-event-update-image:
+      needs: [build-and-push]
+      runs-on: ubuntu-latest
+      steps:
+        - name: Repository Dispatch
+          uses: peter-evans/repository-dispatch@v1
+          with:
+            token: ${{ secrets.PAT }}
+            repository: ${{ env.INFRA_REPO }}
+            event-type: new-image
+            client-payload: '{"image": "${{ env.IMAGE_NAME }}:${{ github.run_number }}", "deployment_manifest_location":"${{ env.KUBERNETES_MANIFEST_LOCATION }}"}'

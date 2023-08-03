@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\UserRegistrationController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +19,7 @@ Route::get('/', function () {
 });
 
 Route::prefix('user')->name('user')->group(function () {
-    
+
     Route::get('register', [UserRegistrationController::class, 'index']);
     Route::post('register', [UserRegistrationController::class, 'store']);
 });
-
-
