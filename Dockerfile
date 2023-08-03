@@ -22,8 +22,10 @@ COPY . .
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 # Remove unnecessary system packages and clean up
-RUN apk del libzip-dev zip unzip && \
-    rm -rf /var/cache/apk/*
+#RUN apk del libzip-dev zip unzip && \
+#    rm -rf /var/cache/apk/*
+
+RUN rm -rf /var/cache/apk/*
 
 # Expose the PHP-FPM port
 EXPOSE 80
