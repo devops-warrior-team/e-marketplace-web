@@ -9,15 +9,6 @@ vendor
 .git
 .gitignore
 
-# Ignore composer files not needed for runtime
-#composer.json
-#composer.lock
-
-# Ignore NPM related files not needed for runtime
-package.json
-package-lock.json
-yarn.lock
-
 # Ignore PHPUnit configuration and cache files
 phpunit.xml
 /tests/*
