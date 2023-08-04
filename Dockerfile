@@ -4,6 +4,12 @@ WORKDIR /app
 COPY composer.json composer.lock ./
 RUN composer install --ignore-platform-reqs --no-interaction --no-plugins --no-scripts
 
+# Stage 2: Install dependecies for assets packaging
+FROM node:alpine AS node_build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install && npm run build
+
 # Stage 2: Build the actual Docker image
 FROM php:8.2-fpm-alpine
 
@@ -16,15 +22,15 @@ WORKDIR /var/www/html
 
 # Copy Laravel application files from the composer stage
 COPY --from=composer /app/vendor ./vendor
+COPY --from=node_build /app/node_modules ./node_modules
+# Copy npm build resource 
+COPY --from=node_build /app/public ./public
 COPY . .
 
 # Set appropriate permissions for Laravel directories
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 # Remove unnecessary system packages and clean up
-#RUN apk del libzip-dev zip unzip && \
-#    rm -rf /var/cache/apk/*
-
 RUN rm -rf /var/cache/apk/*
 
 # Expose the PHP-FPM port
