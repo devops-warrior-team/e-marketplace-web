@@ -8,6 +8,10 @@ RUN composer install --ignore-platform-reqs --no-interaction --no-plugins --no-s
 FROM node:alpine AS node_build
 WORKDIR /app
 COPY package.json package-lock.json ./
+# this resources needed for build in command bellow
+COPY *.config.js ./
+COPY ./resources ./resources
+# Build asset
 RUN npm install && npm run build
 
 # Stage 2: Build the actual Docker image
