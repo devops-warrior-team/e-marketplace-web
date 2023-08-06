@@ -35,3 +35,4 @@ kubeseal --scope cluster-wide --controller-namespace kube-system --format yaml -
 
 ### References:
 - [Login with sso google](https://codyrigg.medium.com/how-to-add-a-google-login-using-socialite-on-laravel-8-with-jetstream-6153581e7dc9)
+- [Setup Github actions only passed pull-request check](https://stackoverflow.com/a/58655352)
