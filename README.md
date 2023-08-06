@@ -35,3 +35,4 @@ kubeseal --scope cluster-wide --controller-namespace kube-system --format yaml -
 
 ## References
 - [Setup Github actions only passed pull-request check](https://stackoverflow.com/a/58655352)
+- [Setup Protected Branch in Github](https://www.youtube.com/watch?v=rYwwz1b2Nss&ab_channel=LeelaWebDev)
