@@ -101,7 +101,7 @@ jobs:
           name: console
           path: tests/Browser/console
 
-  build-and-push:
+  build-check:
       needs: [unit-feature-testing, browser-testing ]
       runs-on: ubuntu-latest
       steps:
