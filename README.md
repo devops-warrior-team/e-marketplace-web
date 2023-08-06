@@ -26,9 +26,12 @@ kubeseal --controller-namespace kube-system --format yaml -f deployment/e-market
 If you facing error like this : \
 ```
 Failed to unseal: no key could decrypt secret
-```\
+```
 Its mean have problem with decrypting from controller to namespaced sealed secret\
 For temporary solution, we can use scope cluster-wide first
 ```
 kubeseal --scope cluster-wide --controller-namespace kube-system --format yaml -f deployment/e-marketplace-secret.yaml > deployment/e-marketplace-sealedsecret.yaml
 ```
+
+### References:
+- [Login with sso google](https://codyrigg.medium.com/how-to-add-a-google-login-using-socialite-on-laravel-8-with-jetstream-6153581e7dc9)
