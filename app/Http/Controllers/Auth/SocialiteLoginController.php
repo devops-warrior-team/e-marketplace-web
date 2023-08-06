@@ -17,7 +17,7 @@ class SocialiteLoginController extends Controller
     /**
      * Redirect the user to the Google authentication page.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function redirectToGoogle(){
         return Socialite::driver('google')->redirect();
@@ -54,8 +54,7 @@ class SocialiteLoginController extends Controller
                 return redirect()->intended(RouteServiceProvider::HOME);
             }
         }catch(Exception $e){
-            dd($e);
-            dd($e->getMessage());
+            return redirect('/login');
         }
     }
 }
