@@ -32,3 +32,6 @@ For temporary solution, we can use scope cluster-wide first
 ```
 kubeseal --scope cluster-wide --controller-namespace kube-system --format yaml -f deployment/e-marketplace-secret.yaml > deployment/e-marketplace-sealedsecret.yaml
 ```
+
+## References
+- [Setup Github actions only passed pull-request check](https://stackoverflow.com/a/58655352)
